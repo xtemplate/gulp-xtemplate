@@ -24,7 +24,7 @@ gulp.src('lib/**/*')
 
 a.xtpl
 ```
-{{include './b'}}{{x}}
+{{include('./b')}}{{x}}
 ```
 
 ### after compile
