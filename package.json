@@ -1,0 +1,12 @@
+{
+  "name": "gulp-xtemplate",
+  "version": "0.0.1",
+  "engines": {
+    "node": "~0.10"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/kissyteam/gulp-xtemplate.git"
+  }
+}
