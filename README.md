@@ -48,9 +48,9 @@ a-render.js
 modulex.add(function(require){
   // x.y.z is extracted from xtemplate.version 
   var runtime = require('kg/xtemplate-runtime/x.y.z/');
-  var compiled = require('./a')
+  var compiled = require('./a');
+  var instance = new XTemplate(compiled);
   return function(){
-    var instance = new XTemplate(compiled);
     return instance.render.apply(instance, arguments);
   }
 });
