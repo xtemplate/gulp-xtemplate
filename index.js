@@ -1,11 +1,11 @@
 var through2 = require('through2');
 var path = require('path');
 var util = require('modulex-util');
-var tpl = ['modulex.add(function(require,exports,module){',
+var tpl = ['{define}(function(require,exports,module){',
     'module.exports = @func@;',
     'module.exports.TPL_NAME = module.name;',
     '});'].join('\n');
-var renderTpl = ['modulex.add(function(require,exports,module){',
+var renderTpl = ['{define}(function(require,exports,module){',
     'var tpl = require("@tpl@");',
     'var XTemplateRuntime = require("@runtime@");',
     'var instance = new XTemplateRuntime(tpl);',
@@ -25,6 +25,8 @@ module.exports = function (config) {
     var XTemplate = config.XTemplate;
     var useGallery = config.useGallery;
     var version = XTemplate.version;
+    var useDefine = config.useDefine;
+    var define = useDefine ? 'define' : 'modulex.add';
     if (useGallery === undefined) {
         useGallery = true;
     }
@@ -46,14 +48,16 @@ module.exports = function (config) {
         var tplFile = file.clone();
         tplFile.path = file.path.slice(0, 0 - suffix.length) + '.js';
         tplFile.contents = new Buffer(util.substitute(tpl, {
-            func: compiledFunc
+            func: compiledFunc,
+            define: define
         }, /@([^@]+)@/g));
         this.push(tplFile);
         var tplRenderFile = file.clone();
         tplRenderFile.path = file.path.slice(0, 0 - suffix.length) + '-render.js';
         tplRenderFile.contents = new Buffer(util.substitute(renderTpl, {
             tpl: './' + name,
-            runtime: useGallery ? 'kg/xtemplate/' + version + '/runtime' : 'xtemplate/runtime'
+            runtime: useGallery ? 'kg/xtemplate/' + version + '/runtime' : 'xtemplate/runtime',
+            define: define
         }, /@([^@]+)@/g));
         this.push(tplRenderFile);
         callback();

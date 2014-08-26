@@ -6,13 +6,14 @@ compile .xtpl file to modulex module
 ## usage
 
 ```javascript
-var xtemplate = require('xtemplate');
+var XTemplate = require('xtemplate');
 var gulpXTemplate = require('gulp-xtemplate');
 
 gulp.src('lib/**/*')
     .pipe(gulpXTemplate({
-        suffix:'.xtpl' // defaults to .xtpl, transform xx.tpl -> xx.js
-        xtemplate: xtemplate // required. xtemplate module
+        useDefine: false, // defaults to false. compiled to define() instead of modulex.add()
+        suffix:'.xtpl' // defaults to .xtpl. transform xx.tpl -> xx.js
+        XTemplate: XTemplate // required. xtemplate module
     }))
     .pipe(uglify())
     .pipe(gulp.dest('build'))
