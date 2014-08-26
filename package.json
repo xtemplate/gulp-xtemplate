@@ -1,19 +1,17 @@
 {
-  "name": "gulp-xtemplate",
-  "author": "yiminghe@gmail.com",
-  "version": "1.0.0",
-  "engines": {
-    "node": "~0.10"
-  },
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "http://github.com/kissyteam/gulp-xtemplate.git"
-  },
-  "devDependencies": {
-    "through2": "^0.6.1"
-  },
-  "dependencies": {
-    "modulex-util": "^1.0.4"
-  }
+    "name": "gulp-xtemplate",
+    "author": "yiminghe@gmail.com",
+    "version": "1.0.1",
+    "engines": {
+        "node": "~0.10"
+    },
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/kissyteam/gulp-xtemplate.git"
+    },
+    "dependencies": {
+        "through2": "^0.6.1",
+        "modulex-util": "^1.0.4"
+    }
 }
