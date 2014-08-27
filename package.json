@@ -4,9 +4,15 @@
   "engines": {
     "node": "~0.10"
   },
+  "author": "daxingplay <daxingplay@gmail.com>",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "http://github.com/kissyteam/gulp-xtemplate.git"
+  },
+  "dependencies": {
+    "escodegen": "^1.3.3",
+    "esprima": "^1.2.2",
+    "xtemplate": "^1.1.1"
   }
 }
