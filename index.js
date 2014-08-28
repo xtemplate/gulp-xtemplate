@@ -1,11 +1,11 @@
 var through2 = require('through2');
 var path = require('path');
 var util = require('modulex-util');
-var tpl = ['@define@(function(require,exports,module){',
+var tpl = ['@define@{',
     'module.exports = @func@;',
     'module.exports.TPL_NAME = module.name;',
     '});'].join('\n');
-var renderTpl = ['@define@(function(require,exports,module){',
+var renderTpl = ['@define@{',
     'var tpl = require("@tpl@");',
     'var XTemplateRuntime = require("@runtime@");',
     'var instance = new XTemplateRuntime(tpl);',
@@ -20,16 +20,18 @@ function getFunctionName(name) {
     })
 }
 
+var wrapper = {
+    'modulex': 'modulex.add(function(require,exports,module)',
+    'kissy': 'KISSY.add(function(S,require,exports,module)',
+    'define': 'define(function(require,exports,module)'
+};
+
 module.exports = function (config) {
     var suffix = config.suffix || '.xtpl';
     var XTemplate = config.XTemplate;
-    var useGallery = config.useGallery;
-    var version = XTemplate.version;
-    var useDefine = config.useDefine;
-    var define = useDefine ? 'define' : 'modulex.add';
-    if (useGallery === undefined) {
-        useGallery = true;
-    }
+    var runtime = config.runtime || 'kg/xtemplate/' + XTemplate.version + '/runtime';
+    var wrap = config.wrap;
+    var define = wrapper[wrap] || wrapper.modulex;
     return through2.obj(function (file, encoding, callback) {
         if (path.extname(file.path) !== suffix) {
             callback(file);
@@ -56,7 +58,7 @@ module.exports = function (config) {
         tplRenderFile.path = file.path.slice(0, 0 - suffix.length) + '-render.js';
         tplRenderFile.contents = new Buffer(util.substitute(renderTpl, {
             tpl: './' + name,
-            runtime: useGallery ? 'kg/xtemplate/' + version + '/runtime' : 'xtemplate/runtime',
+            runtime: runtime,
             define: define
         }, /@([^@]+)@/g));
         this.push(tplRenderFile);

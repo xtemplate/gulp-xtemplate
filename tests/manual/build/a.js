@@ -1,4 +1,4 @@
-modulex.add(function(require,exports,module){
+modulex.add(function(require,exports,module)
 module.exports = function a(scope,buffer,undefined){
 var tpl = this;var pos = tpl.pos = {line:1, col:1};
 var nativeCommands = tpl.root.nativeCommands;
@@ -25,7 +25,7 @@ var params2 = [];
 params2.push('./b');
 option1.params = params2;
 var module3 = require("./b");
-option1.params[0]="z";
+option1.params[0] = module3.TPL_NAME;
 var callRet4
 pos.line = 1; pos.col = 15;
 callRet4 = includeCommand.call(tpl, scope, option1, buffer);

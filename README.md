@@ -11,7 +11,7 @@ var gulpXTemplate = require('gulp-xtemplate');
 
 gulp.src('lib/**/*')
     .pipe(gulpXTemplate({
-        useDefine: false, // defaults to false. compiled to define() instead of modulex.add()
+        wrap: 'modulex', // defaults to modulex. set to define compiled to define() or kissy to KISSY.add
         suffix:'.xtpl' // defaults to .xtpl. transform xx.tpl -> xx.js
         XTemplate: XTemplate // required. xtemplate module
     }))
