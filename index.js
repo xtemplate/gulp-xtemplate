@@ -1,11 +1,11 @@
 var through2 = require('through2');
 var path = require('path');
 var util = require('modulex-util');
-var tpl = ['{define}(function(require,exports,module){',
+var tpl = ['@define@(function(require,exports,module){',
     'module.exports = @func@;',
     'module.exports.TPL_NAME = module.name;',
     '});'].join('\n');
-var renderTpl = ['{define}(function(require,exports,module){',
+var renderTpl = ['@define@(function(require,exports,module){',
     'var tpl = require("@tpl@");',
     'var XTemplateRuntime = require("@runtime@");',
     'var instance = new XTemplateRuntime(tpl);',
