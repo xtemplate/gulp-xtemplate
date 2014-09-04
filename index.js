@@ -3,7 +3,7 @@ var path = require('path');
 var util = require('modulex-util');
 var tpl = ['@define@{',
     'module.exports = @func@;',
-    'module.exports.TPL_NAME = module.name;',
+    'module.exports.TPL_NAME = module.id || module.name;',
     '});'].join('\n');
 var renderTpl = ['@define@{',
     'var tpl = require("@tpl@");',
