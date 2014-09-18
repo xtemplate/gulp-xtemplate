@@ -31,6 +31,7 @@ module.exports = function (config) {
     var XTemplate = config.XTemplate;
     var runtime = config.runtime || 'kg/xtemplate/' + XTemplate.version + '/runtime';
     var wrap = config.wrap;
+    var truncatePrefixLen = config.truncatePrefixLen || 0;
     var define = wrapper[wrap] || wrapper.modulex;
     return through2.obj(function (file, encoding, callback) {
         if (path.extname(file.path) !== suffix) {
@@ -42,7 +43,7 @@ module.exports = function (config) {
         var name = path.basename(file.path, suffix);
         var functionName = getFunctionName(name);
         var compiledFunc = XTemplate.Compiler.compileToStr({
-            name: file.path,
+            name: file.path.slice(truncatePrefixLen),
             isModule: 1,
             functionName: functionName,
             content: fileContent

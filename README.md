@@ -14,6 +14,7 @@ gulp.src('lib/**/*')
         wrap: 'modulex', // defaults to modulex. set to define compiled to define() or kissy to KISSY.add
         // runtime:'', defaults to kg/xtemplate/x.y.z/runtime
         suffix:'.xtpl' // defaults to .xtpl. transform xx.tpl -> xx.js
+        truncatePrefixLen: 0,//optional, remove the first length string of file path from generate code
         XTemplate: XTemplate // required. xtemplate module
     }))
     .pipe(uglify())
