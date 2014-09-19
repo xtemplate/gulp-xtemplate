@@ -45,6 +45,7 @@ module.exports = function (config) {
         var compiledFunc = XTemplate.Compiler.compileToStr({
             name: file.path.slice(truncatePrefixLen),
             isModule: 1,
+            catchError: config.catchError,
             functionName: functionName,
             content: fileContent
         });
