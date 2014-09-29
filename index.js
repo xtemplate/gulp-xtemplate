@@ -12,7 +12,7 @@ var renderTplInner = [
     'var tpl = require("@tpl@");',
     'var XTemplateRuntime = require("@runtime@");',
     'var instance = new XTemplateRuntime(tpl);',
-    'return function(){',
+    'module.exports = function(){',
     'return instance.render.apply(instance,arguments);',
     '};'
 ].join('\n');
