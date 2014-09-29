@@ -4,9 +4,9 @@ var util = require('modulex-util');
 var tplInner = [
     'module.exports = @func@;',
     'module.exports.TPL_NAME = module.id || module.name;'
-];
+].join('\n');
 var tpl = ['@define@{',
-    tplInner.join('\n'),
+    tplInner,
     '});'].join('\n');
 var renderTplInner = [
     'var tpl = require("@tpl@");',
@@ -15,9 +15,9 @@ var renderTplInner = [
     'return function(){',
     'return instance.render.apply(instance,arguments);',
     '};'
-];
+].join('\n');
 var renderTpl = ['@define@{',
-    renderTplInner.join('\n'),
+    renderTplInner,
     '});'].join('\n');
 
 function getFunctionName(name) {
