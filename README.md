@@ -12,7 +12,10 @@ var gulpXTemplate = require('gulp-xtemplate');
 gulp.src('lib/**/*')
     .pipe(gulpXTemplate({
         wrap: 'modulex', // defaults to modulex. set to define compiled to define() or kissy to KISSY.add
-        catchError: false,// optional,defaults to false. whether to point to line of xtpl when exception occurs(impact performance)
+        compileConfig: {
+            isModule:1, // defaults to 1. use native template require
+            catchError:false // defaults to false. whether to point to line of xtpl when exception occurs(impact performance)
+        },
         // runtime:'', defaults to kg/xtemplate/x.y.z/runtime
         suffix:'.xtpl' // defaults to .xtpl. transform xx.tpl -> xx.js
         truncatePrefixLen: 0,//optional, remove the first length string of file path from generate code

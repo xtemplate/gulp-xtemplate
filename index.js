@@ -39,6 +39,9 @@ module.exports = function (config) {
     var wrap = config.wrap;
     var truncatePrefixLen = config.truncatePrefixLen || 0;
     var define = wrapper[wrap] || wrapper.modulex;
+    var compileConfig = util.merge({
+        isModule: 1
+    }, config.compileConfig);
     return through2.obj(function (file, encoding, callback) {
         if (path.extname(file.path) !== suffix) {
             callback(file);
@@ -48,23 +51,21 @@ module.exports = function (config) {
         file.contents = null;
         var name = path.basename(file.path, suffix);
         var functionName = getFunctionName(name);
-        var compiledFunc = XTemplate.Compiler.compileToStr({
+        var compiledFunc = XTemplate.Compiler.compileToStr(util.merge(compileConfig, {
             name: file.path.slice(truncatePrefixLen),
-            isModule: 1,
-            catchError: config.catchError,
             functionName: functionName,
             content: fileContent
-        });
+        }));
         var tplFile = file.clone();
         tplFile.path = file.path.slice(0, 0 - suffix.length) + '.js';
-        tplFile.contents = new Buffer(util.substitute(wrap ? tpl : tplInner, {
+        tplFile.contents = new Buffer(util.substitute(wrap!==false ? tpl : tplInner, {
             func: compiledFunc,
             define: define
         }, /@([^@]+)@/g));
         this.push(tplFile);
         var tplRenderFile = file.clone();
         tplRenderFile.path = file.path.slice(0, 0 - suffix.length) + '-render.js';
-        tplRenderFile.contents = new Buffer(util.substitute(wrap ? renderTpl : renderTplInner, {
+        tplRenderFile.contents = new Buffer(util.substitute(wrap!==false ? renderTpl : renderTplInner, {
             tpl: './' + name,
             runtime: runtime,
             define: define
