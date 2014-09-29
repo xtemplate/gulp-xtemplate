@@ -2,8 +2,8 @@ var through2 = require('through2');
 var path = require('path');
 var util = require('modulex-util');
 var tplInner = [
-    'module.exports = @func@;',
-    'module.exports.TPL_NAME = module.id || module.name;'
+    'var ret = module.exports = @func@;',
+    'ret.TPL_NAME = module.id || module.name;'
 ].join('\n');
 var tpl = ['@define@{',
     tplInner,
@@ -58,14 +58,14 @@ module.exports = function (config) {
         }));
         var tplFile = file.clone();
         tplFile.path = file.path.slice(0, 0 - suffix.length) + '.js';
-        tplFile.contents = new Buffer(util.substitute(wrap!==false ? tpl : tplInner, {
+        tplFile.contents = new Buffer(util.substitute(wrap !== false ? tpl : tplInner, {
             func: compiledFunc,
             define: define
         }, /@([^@]+)@/g));
         this.push(tplFile);
         var tplRenderFile = file.clone();
         tplRenderFile.path = file.path.slice(0, 0 - suffix.length) + '-render.js';
-        tplRenderFile.contents = new Buffer(util.substitute(wrap!==false ? renderTpl : renderTplInner, {
+        tplRenderFile.contents = new Buffer(util.substitute(wrap !== false ? renderTpl : renderTplInner, {
             tpl: './' + name,
             runtime: runtime,
             define: define
