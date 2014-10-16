@@ -1,11 +1,33 @@
-modulex.add(function(require,exports,module)
-module.exports = function a(scope,buffer,undefined){
-var tpl = this;var pos = tpl.pos = {line:1, col:1};
-var nativeCommands = tpl.root.nativeCommands;
-var utils = tpl.root.utils;
+modulex.add(function(require,exports,module){
+/*compiled by xtemplate#3.3.1*/
+var ret = module.exports = function a(undefined){
+var t;
+var t0;
+var t1;
+var t2;
+var t3;
+var t4;
+var t5;
+var t6;
+var t7;
+var t8;
+var t9;
+var tpl = this;
+var root = tpl.root;
+var buffer = tpl.buffer;
+var scope = tpl.scope;
+var runtime = tpl.runtime;
+var name = tpl.name;
+var pos = tpl.pos;
+var data = scope.data;
+var affix = scope.affix;
+var nativeCommands = root.nativeCommands;
+var utils = root.utils;
 var callFnUtil = utils["callFn"];
 var callCommandUtil = utils["callCommand"];
 var rangeCommand = nativeCommands["range"];
+var foreachCommand = nativeCommands["foreach"];
+var forinCommand = nativeCommands["forin"];
 var eachCommand = nativeCommands["each"];
 var withCommand = nativeCommands["with"];
 var ifCommand = nativeCommands["if"];
@@ -16,25 +38,16 @@ var extendCommand = nativeCommands["extend"];
 var blockCommand = nativeCommands["block"];
 var macroCommand = nativeCommands["macro"];
 var debuggerCommand = nativeCommands["debugger"];
-buffer.append('');
-var id0 = scope.resolve(["x"]);
-buffer.writeEscaped(id0);
-buffer.append('');
-var option1 = {escape: 1};
-var params2 = [];
-params2.push('./b');
-option1.params = params2;
-var module3 = require("./b");
-option1.params[0] = module3.TPL_NAME;
-var callRet4
-pos.line = 1; pos.col = 15;
-callRet4 = includeCommand.call(tpl, scope, option1, buffer);
-if(callRet4 && callRet4.isBuffer){
-buffer = callRet4;
-callRet4 = undefined;
-}
-buffer.writeEscaped(callRet4);
+
+
+buffer.data += '';
+var id0 = ((t=(affix.x)) !== undefined ? t:((t = data.x) !== undefined ? t :scope.resolveLooseUp(["x"])));
+buffer = buffer.writeEscaped(id0);
+buffer.data += '';
+var callRet1
+buffer = root.includeModule(scope,{params:[require("./b")]},buffer,tpl);
+buffer = buffer.writeEscaped(callRet1);
 return buffer;
 };
-module.exports.TPL_NAME = module.name;
+ret.TPL_NAME = module.id || module.name;
 });

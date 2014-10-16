@@ -2,6 +2,7 @@ var through2 = require('through2');
 var path = require('path');
 var util = require('modulex-util');
 var tplInner = [
+    '/*compiled by xtemplate#@version@*/',
     'var ret = module.exports = @func@;',
     'ret.TPL_NAME = module.id || module.name;'
 ].join('\n');
@@ -9,6 +10,7 @@ var tpl = ['@define@{',
     tplInner,
     '});'].join('\n');
 var renderTplInner = [
+    '/*compiled by xtemplate#@version@*/',
     'var tpl = require("@tpl@");',
     'var XTemplateRuntime = require("@runtime@");',
     'var instance = new XTemplateRuntime(tpl);',
@@ -16,7 +18,7 @@ var renderTplInner = [
     'return instance.render.apply(instance,arguments);',
     '};'
 ].join('\n');
-var renderTpl = ['@define@{',
+var renderTpl = [ '@define@{',
     renderTplInner,
     '});'].join('\n');
 
@@ -59,6 +61,7 @@ module.exports = function (config) {
         var tplFile = file.clone();
         tplFile.path = file.path.slice(0, 0 - suffix.length) + '.js';
         tplFile.contents = new Buffer(util.substitute(wrap !== false ? tpl : tplInner, {
+            version: XTemplate.version,
             func: compiledFunc,
             define: define
         }, /@([^@]+)@/g));
@@ -67,6 +70,7 @@ module.exports = function (config) {
         tplRenderFile.path = file.path.slice(0, 0 - suffix.length) + '-render.js';
         tplRenderFile.contents = new Buffer(util.substitute(wrap !== false ? renderTpl : renderTplInner, {
             tpl: './' + name,
+            version: XTemplate.version,
             runtime: runtime,
             define: define
         }, /@([^@]+)@/g));
