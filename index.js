@@ -39,6 +39,7 @@ module.exports = function (config) {
     var XTemplate = config.XTemplate;
     var runtime = config.runtime || 'kg/xtemplate/' + XTemplate.version + '/runtime';
     var wrap = config.wrap;
+    var renderJs = config.renderJs || '-render.js';
     var truncatePrefixLen = config.truncatePrefixLen || 0;
     var define = wrapper[wrap] || wrapper.modulex;
     var compileConfig = util.merge({
@@ -66,15 +67,17 @@ module.exports = function (config) {
             define: define
         }, /@([^@]+)@/g));
         this.push(tplFile);
-        var tplRenderFile = file.clone();
-        tplRenderFile.path = file.path.slice(0, 0 - suffix.length) + '-render.js';
-        tplRenderFile.contents = new Buffer(util.substitute(wrap !== false ? renderTpl : renderTplInner, {
-            tpl: './' + name,
-            version: XTemplate.version,
-            runtime: runtime,
-            define: define
-        }, /@([^@]+)@/g));
-        this.push(tplRenderFile);
+        if(renderJs != 'none'){
+            var tplRenderFile = file.clone();
+            tplRenderFile.path = file.path.slice(0, 0 - suffix.length) + '-render.js';
+            tplRenderFile.contents = new Buffer(util.substitute(wrap !== false ? renderTpl : renderTplInner, {
+                tpl: './' + name,
+                version: XTemplate.version,
+                runtime: runtime,
+                define: define
+            }, /@([^@]+)@/g));
+            this.push(tplRenderFile);
+        }
         callback();
     });
 };
