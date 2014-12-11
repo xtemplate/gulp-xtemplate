@@ -17,7 +17,7 @@ gulp.src('lib/**/*')
             catchError:false // defaults to false. whether to point to line of xtpl when exception occurs(impact performance)
         },
         // runtime:'', defaults to xtemplate, can set to kg/xtemplate/require('xtemplate/package.json').version/runtime
-        suffix:'.xtpl', // defaults to .xtpl. transform xx.tpl -> xx.js
+        suffix:'.xtpl', // defaults to .xtpl. transform xx.xtpl -> xx.js
         truncatePrefixLen: 0,//optional, remove the first length string of file path from generate code
         XTemplate: require('xtemplate') // required. xtemplate module,
         renderJs:'-render.js'// render xtpl file suffix.set to 'none' don't create render file
