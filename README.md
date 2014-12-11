@@ -16,7 +16,7 @@ gulp.src('lib/**/*')
             isModule:1, // defaults to 1. use native template require
             catchError:false // defaults to false. whether to point to line of xtpl when exception occurs(impact performance)
         },
-        // runtime:'', defaults to xtemplate, can set to kg/xtemplate/require('xtemplate/package.json').version/runtime
+        // runtime:'', defaults to xtemplate/lib/xtemplate/runtime, if use kissy gallery u need to set to kg/xtemplate/require('xtemplate/package.json').version/runtime
         suffix:'.xtpl', // defaults to .xtpl. transform xx.xtpl -> xx.js
         truncatePrefixLen: 0,//optional, remove the first length string of file path from generate code
         XTemplate: require('xtemplate') // required. xtemplate module,
