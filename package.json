@@ -1,14 +1,14 @@
 {
   "name": "gulp-xtemplate",
   "author": "yiminghe@gmail.com",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "engines": {
     "node": "~0.10"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "http://github.com/kissyteam/gulp-xtemplate.git"
+    "url": "http://github.com/xtemplate/gulp-xtemplate.git"
   },
   "dependencies": {
     "through2": "^0.6.1",

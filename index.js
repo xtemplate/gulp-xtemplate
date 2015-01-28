@@ -41,7 +41,7 @@ module.exports = function (config) {
   var wrap = config.wrap;
   var renderJs = config.renderJs || '-render.js';
   var truncatePrefixLen = config.truncatePrefixLen || 0;
-  var define = wrapper[wrap] || wrapper.modulex;
+  var define = wrapper[wrap] || wrapper.define;
   var compileConfig = util.merge({
     isModule: 1
   }, config.compileConfig);
@@ -61,7 +61,7 @@ module.exports = function (config) {
     }));
     var tplFile = file.clone();
     tplFile.path = file.path.slice(0, 0 - suffix.length) + '.js';
-    tplFile.contents = new Buffer(util.substitute(wrap !== false ? tpl : tplInner, {
+    tplFile.contents = new Buffer(util.substitute(wrap ? tpl : tplInner, {
       version: XTemplate.version,
       func: compiledFunc,
       define: define
@@ -70,7 +70,7 @@ module.exports = function (config) {
     if (renderJs != 'none') {
       var tplRenderFile = file.clone();
       tplRenderFile.path = file.path.slice(0, 0 - suffix.length) + '-render.js';
-      tplRenderFile.contents = new Buffer(util.substitute(wrap !== false ? renderTpl : renderTplInner, {
+      tplRenderFile.contents = new Buffer(util.substitute(wrap ? renderTpl : renderTplInner, {
         tpl: './' + name,
         version: XTemplate.version,
         runtime: runtime,
