@@ -22,6 +22,8 @@ var renderTpl = ['@define@{',
   renderTplInner,
   '});'].join('\n');
 
+var eslintDisable = '/* eslint-disable */\n'
+
 function getFunctionName(name) {
   return name.replace(/-(.)/g, function (m, m1) {
     return m1.toUpperCase();
@@ -61,7 +63,7 @@ module.exports = function (config) {
     }));
     var tplFile = file.clone();
     tplFile.path = file.path.slice(0, 0 - suffix.length) + '.js';
-    tplFile.contents = new Buffer(util.substitute(wrap ? tpl : tplInner, {
+    tplFile.contents = new Buffer(eslintDisable + util.substitute(wrap ? tpl : tplInner, {
       version: XTemplate.version,
       func: compiledFunc,
       define: define
@@ -70,7 +72,7 @@ module.exports = function (config) {
     if (renderJs != 'none') {
       var tplRenderFile = file.clone();
       tplRenderFile.path = file.path.slice(0, 0 - suffix.length) + '-render.js';
-      tplRenderFile.contents = new Buffer(util.substitute(wrap ? renderTpl : renderTplInner, {
+      tplRenderFile.contents = new Buffer(eslintDisable + util.substitute(wrap ? renderTpl : renderTplInner, {
         tpl: './' + name,
         version: XTemplate.version,
         runtime: runtime,
