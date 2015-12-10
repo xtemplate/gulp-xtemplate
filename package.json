@@ -1,7 +1,7 @@
 {
   "name": "gulp-xtemplate",
   "author": "yiminghe@gmail.com",
-  "version": "2.1.0",
+  "version": "2.1.1",
   "engines": {
     "node": "~0.10"
   },
