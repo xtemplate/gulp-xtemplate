@@ -3,7 +3,7 @@
   "author": "yiminghe@gmail.com",
   "version": "2.1.1",
   "engines": {
-    "node": "~0.10"
+    "node": ">=0.10"
   },
   "license": "MIT",
   "repository": {
