@@ -1,15 +1,22 @@
 var through2 = require('through2');
 var path = require('path');
 var util = require('modulex-util');
-var tplInner = [
+
+var requireTplInner = [
   '/*compiled by xtemplate#@version@*/',
   'var ret = module.exports = @func@;',
-  'ret.TPL_NAME = module.id || module.name;'
+  'ret.TPL_NAME = "@tplName@";'
+].join('\n');
+var esTplInner = [
+  '/*compiled by xtemplate#@version@*/',
+  'var ret = @func@;',
+  'ret.TPL_NAME = "@tplName@";',
+  'export default ret;'
 ].join('\n');
 var tpl = ['@define@{',
-  tplInner,
+  requireTplInner,
   '});'].join('\n');
-var renderTplInner = [
+var requireRenderTplInner = [
   '/*compiled by xtemplate#@version@*/',
   'var tpl = require("@tpl@");',
   'var XTemplateRuntime = require("@runtime@");',
@@ -18,8 +25,19 @@ var renderTplInner = [
   'return instance.render.apply(instance,arguments);',
   '};'
 ].join('\n');
+
+var esRenderTplInner = [
+  '/*compiled by xtemplate#@version@*/',
+  'import tpl from "@tpl@";',
+  'import XTemplateRuntime from "@runtime@";',
+  'var instance = new XTemplateRuntime(tpl);',
+  'export default function(){',
+  'return instance.render.apply(instance,arguments);',
+  '};'
+].join('\n');
+
 var renderTpl = ['@define@{',
-  renderTplInner,
+  requireRenderTplInner,
   '});'].join('\n');
 
 var eslintDisable = '/* eslint-disable */\n'
@@ -27,7 +45,7 @@ var eslintDisable = '/* eslint-disable */\n'
 function getFunctionName(name) {
   return name.replace(/-(.)/g, function (m, m1) {
     return m1.toUpperCase();
-  })
+  });
 }
 
 var wrapper = {
@@ -39,8 +57,12 @@ var wrapper = {
 module.exports = function (config) {
   var suffix = config.suffix || '.xtpl';
   var XTemplate = config.XTemplate;
-  var runtime = config.runtime || 'xtemplate/lib/xtemplate/runtime';
+  var runtime = config.runtime || 'xtemplate-runtime';
   var wrap = config.wrap;
+  var esmodule = config.esmodule;
+  const tplInner = esmodule ? esTplInner : requireTplInner;
+  const renderTplInner = esmodule ? esRenderTplInner : requireRenderTplInner;
+
   var renderJs = config.renderJs || '-render.js';
   var truncatePrefixLen = config.truncatePrefixLen || 0;
   var define = wrapper[wrap] || wrapper.define;
@@ -66,7 +88,8 @@ module.exports = function (config) {
     tplFile.contents = new Buffer(eslintDisable + util.substitute(wrap ? tpl : tplInner, {
       version: XTemplate.version,
       func: compiledFunc,
-      define: define
+      define: define,
+      tplName: path.basename(file.path),
     }, /@([^@]+)@/g));
     this.push(tplFile);
     if (renderJs != 'none') {

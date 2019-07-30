@@ -7,10 +7,12 @@ compile .xtpl file to modulex module
 
 ```javascript
 var XTemplate = require('xtemplate');
+XTemplate=XTemplate.default||XTemplate;
 var gulpXTemplate = require('gulp-xtemplate');
 
 gulp.src('lib/**/*')
     .pipe(gulpXTemplate({
+        // esmodule: true, // defaults to commonjs
         // wrap: 'define', // defaults to commonjs. set to define compiled to define().
         compileConfig: {
             isModule:1, // defaults to 1. use native template require
@@ -19,7 +21,7 @@ gulp.src('lib/**/*')
         // runtime:'', defaults to xtemplate/lib/xtemplate/runtime, if use kissy gallery u need to set to kg/xtemplate/require('xtemplate/package.json').version/runtime
         suffix:'.xtpl', // defaults to .xtpl. transform xx.xtpl -> xx.js
         truncatePrefixLen: 0,//optional, remove the first length string of file path from generate code
-        XTemplate: require('xtemplate') // required. xtemplate module,
+        XTemplate, // required. xtemplate module,
         renderJs:'-render.js'// render xtpl file suffix.set to 'none' don't create render file
     }))
     .pipe(uglify())

@@ -1,7 +1,7 @@
 {
   "name": "gulp-xtemplate",
   "author": "yiminghe@gmail.com",
-  "version": "2.1.1",
+  "version": "3.0.0",
   "engines": {
     "node": ">=0.10"
   },
@@ -10,8 +10,12 @@
     "type": "git",
     "url": "http://github.com/xtemplate/gulp-xtemplate.git"
   },
+  "devDependencies": {
+    "gulp": "^3.8.7",
+    "xtemplate": "^4.6.1"
+  },
   "dependencies": {
-    "through2": "^0.6.1",
-    "modulex-util": "^1.0.4"
+    "modulex-util": "^1.0.4",
+    "through2": "^0.6.1"
   }
 }

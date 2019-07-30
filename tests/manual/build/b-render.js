@@ -1,9 +1,8 @@
-modulex.add(function(require,exports,module){
-/*compiled by xtemplate#3.3.1*/
-var tpl = require("./b");
-var XTemplateRuntime = require("kg/xtemplate/3.3.1/runtime");
+/* eslint-disable */
+/*compiled by xtemplate#*/
+import tpl from "./b";
+import XTemplateRuntime from "xtemplate-runtime";
 var instance = new XTemplateRuntime(tpl);
-module.exports = function(){
+export default function(){
 return instance.render.apply(instance,arguments);
 };
-});
