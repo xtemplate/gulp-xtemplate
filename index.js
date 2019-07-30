@@ -21,6 +21,7 @@ var requireRenderTplInner = [
   '/*compiled by xtemplate#@version@*/',
   'var tpl = require("@tpl@");',
   'var XTemplateRuntime = require("@runtime@");',
+  'XTemplateRuntime=XTemplateRuntime.default || XTemplateRuntime;',
   'var instance = new XTemplateRuntime(tpl);',
   'module.exports = function(){',
   'return instance.render.apply(instance,arguments);',

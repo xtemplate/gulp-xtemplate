@@ -1,7 +1,7 @@
 {
   "name": "gulp-xtemplate",
   "author": "yiminghe@gmail.com",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "engines": {
     "node": ">=0.10"
   },
@@ -9,6 +9,9 @@
   "repository": {
     "type": "git",
     "url": "http://github.com/xtemplate/gulp-xtemplate.git"
+  },
+  "scripts": {
+    "pub": "git push && npm publish"
   },
   "devDependencies": {
     "gulp": "^3.8.7",
