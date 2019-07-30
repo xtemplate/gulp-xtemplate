@@ -1,7 +1,7 @@
 {
   "name": "gulp-xtemplate",
   "author": "yiminghe@gmail.com",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "engines": {
     "node": ">=0.10"
   },
@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "gulp": "^3.8.7",
-    "xtemplate": "^4.6.1"
+    "xtemplate": "5.x"
   },
   "dependencies": {
     "modulex-util": "^1.0.4",

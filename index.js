@@ -9,6 +9,7 @@ var requireTplInner = [
 ].join('\n');
 var esTplInner = [
   '/*compiled by xtemplate#@version@*/',
+  '@imports@',
   'var ret = @func@;',
   'ret.TPL_NAME = "@tplName@";',
   'export default ret;'
@@ -78,7 +79,7 @@ module.exports = function (config) {
     file.contents = null;
     var name = path.basename(file.path, suffix);
     var functionName = getFunctionName(name);
-    var compiledFunc = XTemplate.Compiler.compileToStr(util.merge(compileConfig, {
+    var compiledFunc = XTemplate.Compiler.compileToCode(util.merge(compileConfig, {
       name: file.path.slice(truncatePrefixLen),
       functionName: functionName,
       content: fileContent
@@ -87,7 +88,8 @@ module.exports = function (config) {
     tplFile.path = file.path.slice(0, 0 - suffix.length) + '.js';
     tplFile.contents = new Buffer(eslintDisable + util.substitute(wrap ? tpl : tplInner, {
       version: XTemplate.version,
-      func: compiledFunc,
+      func: compiledFunc.func,
+      imports: compiledFunc.imports,
       define: define,
       tplName: path.basename(file.path),
     }, /@([^@]+)@/g));
